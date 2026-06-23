@@ -70,15 +70,15 @@
         <li class="menu-header small mt-5">
             <span class="menu-header-text" data-i18n="Umum">Umum</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item <?php if($this->uri->segment(2) == "home" ) echo "active"?>">
 
-            <a href="<?= base_url('admin/home') ?>" class="menu-link">
+            <a href="<?= base_url('admin/home') ?>" class="menu-link ">
                 <i class="menu-icon  ri ri-bar-chart-line"></i>
                 <div data-i18n="Dashboard">Dashboard</div>
             </a>
 
         </li>
-        <li class="menu-item">
+        <li class="menu-item <?php if($this->uri->segment(2) == "transaksi" ) echo "active"?>">
 
             <a href="<?= base_url('admin/transaksi') ?>" class="menu-link">
                 <i class="menu-icon  ri ri-exchange-box-line"></i>
@@ -86,7 +86,7 @@
             </a>
 
         </li>
-        <li class="menu-item">
+        <li class="menu-item <?php if($this->uri->segment(2) == "barang" ) echo "active"?>">
 
             <a href="<?= base_url('admin/barang') ?>" class="menu-link">
                 <i class="menu-icon  ri ri-inbox-2-line"></i>
@@ -99,7 +99,7 @@
             <li class="menu-header small mt-5">
                 <span class="menu-header-text" data-i18n="Master Data">Master Data</span>
             </li>
-            <li class="menu-item">
+            <li class="menu-item <?php if($this->uri->segment(2) == "user" ) echo "active"?>">
 
                 <a href="<?= base_url('admin/user') ?>" class="menu-link">
                     <i class="menu-icon  ri ri-id-card-line"></i>
@@ -107,7 +107,7 @@
                 </a>
 
             </li>
-            <li class="menu-item">
+            <li class="menu-item <?php if($this->uri->segment(2) == "jabatan" ) echo "active"?>">
 
                 <a href="<?= base_url('admin/jabatan') ?>" class="menu-link">
                     <i class="menu-icon  ri ri-bard-line"></i>
@@ -115,7 +115,7 @@
                 </a>
 
             </li>
-            <li class="menu-item">
+            <li class="menu-item <?php if($this->uri->segment(2) == "satuan" ) echo "active"?>">
 
                 <a href="<?= base_url('admin/satuan') ?>" class="menu-link">
                     <i class="menu-icon  ri ri-p2p-line"></i>
@@ -128,7 +128,7 @@
         <li class="menu-header small mt-5">
             <span class="menu-header-text" data-i18n=""></span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item <?php if($this->uri->segment(2) == "logout" ) echo "active"?>">
 
             <a href="<?= base_url('admin/logout') ?>" class="menu-link">
                 <i class="menu-icon  ri ri-logout-box-r-line"></i>

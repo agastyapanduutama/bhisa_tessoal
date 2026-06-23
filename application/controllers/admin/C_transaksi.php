@@ -47,6 +47,17 @@ class C_transaksi extends CI_Controller
         $transaksi_barang = $this->transaksi->data_transaksi_barang($idtransaksi);
         $barang = $this->transaksi->data_barang();
 
+
+        // $this->req->print($transaksi);
+
+
+        if ($transaksi->id_user != $this->session->userdata('id_user') && $_SESSION['is_admin'] != 1) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki akses untuk mengedit transaksi ini !');
+            
+            redirect('admin/transaksi');
+        }
+
+
         $data = array(
             'title'  => 'Edit Transaksi',
             'menu'   => 'transaksi',

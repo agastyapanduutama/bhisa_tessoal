@@ -1,8 +1,8 @@
     <div class="card">
         <div class="card-header">
-            <?php if($_SESSION['is_admin'] == 1):?>
-            <button class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
-            <?php endif?>
+            <?php if ($_SESSION['is_admin'] == 1): ?>
+                <button class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
+            <?php endif ?>
         </div>
         <div class="card-body">
             <div class="card-title">
@@ -59,8 +59,8 @@
 
 
                         <div class="form-group">
-                            <label>Satuan</label>
-                            <select name="id_satuan" id="id_satuan" class="form-control">
+                            <label>Satuan <span style="color:red">*</span></label>
+                            <select required name="id_satuan" id="id_satuan" class="form-control">
                                 <option value="">Pilih Satuan</option>
                                 <?php foreach ($satuan as $s): ?>
                                     <option value="<?= $s->id ?>"><?= $s->nama_satuan ?></option>
@@ -113,8 +113,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Satuan</label>
-                            <select name="id_satuan" id="id_satuan1" class="form-control">
+                            <label>Satuan<span style="color:red">*</span></label>
+                            <select required name="id_satuan" id="id_satuan1" class="form-control">
                                 <option value="">Pilih Satuan</option>
                                 <?php foreach ($satuan as $s): ?>
                                     <option value="<?= $s->id ?>"><?= $s->nama_satuan ?></option>

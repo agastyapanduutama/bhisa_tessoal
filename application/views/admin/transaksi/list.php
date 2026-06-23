@@ -5,6 +5,7 @@
         <div class="card-body">
             <div class="card-title">
                 Data transaksi
+                <?=  $this->req->flash() ?>
             </div>
             <div class='table-responsive'>
                 <table id="list_transaksi" class="table table-striped table-bordered">
