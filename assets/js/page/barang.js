@@ -1,18 +1,15 @@
 
 $(document).ready(function() {
-    table = $('#list_user').DataTable({
+    table = $('#list_barang').DataTable({
         "processing": true,
         "serverSide": true,
         "order": [],
         "ajax": {
-            "url": baseUrl + 'admin/user/data',
+            "url": baseUrl + 'admin/barang/data',
             "type": "POST",
             "error": function(error) {
                 errorCode(error);
             },
-            "data": function(d) {
-                d.id_jabatan = $('#id_jabatan_filter').val();
-            }
         },
         "columnDefs": [
             { "sClass": "text-center", "targets": [0], "orderable": false },
@@ -31,18 +28,18 @@ function _reload() {
         table.ajax.reload(null, false); // null, false menjaga halaman pagination tetap di tempat semula
     }
 }
-$('#list_user').on('click', '#edit', function() {
+$('#list_barang').on('click', '#edit', function() {
     let id = $(this).data('id');
     $.ajax({
-        url: baseUrl + 'admin/user/get/' + id,
+        url: baseUrl + 'admin/barang/get/' + id,
         type: "GET",
         success: function(result) {
             let response = JSON.parse(result);
             $("#idData").val(response.id);
-            $("#nama_user1").val(response.nama_user);
-            $("#username1").val(response.username);
+            $("#nama_barang1").val(response.nama_barang);
+            $("#harga_barang1").val(response.harga_barang);
             
-            $("#id_jabatan1").val(response.id_jabatan).trigger('change');
+            $("#id_satuan1").val(response.id_satuan).trigger('change');
             
             $("#keterangan1").val(response.keterangan);
             $("#modalEdit").modal('show');
@@ -53,12 +50,12 @@ $('#list_user').on('click', '#edit', function() {
     });
 });
 
-$('#list_user').on('click', '.btn-toggle-status, #set', function() {
+$('#list_barang').on('click', '.btn-toggle-status, #set', function() {
     let id = $(this).data('id');
     let action = $(this).data('action'); // Pastikan di PHP ada attribute: data-action="on" atau data-action="off"
     
     let pesan = (action === 'off') ? "Data akan dinon-aktifkan !" : "Data akan diaktifkan !";
-    let endpointUrl = baseUrl + 'admin/user/set/' + id + '/' + action;
+    let endpointUrl = baseUrl + 'admin/barang/set/' + id + '/' + action;
 
     confirmSweet(pesan).then(result => {
         if (result) {
@@ -82,12 +79,12 @@ $('#list_user').on('click', '.btn-toggle-status, #set', function() {
     });
 });
 
-$('#list_user').on('click', '#delete', function() {
+$('#list_barang').on('click', '#delete', function() {
     let id = $(this).data('id');
     confirmSweet("Data akan terhapus secara permanen !").then(result => {
         if (result) {
             $.ajax({
-                url: baseUrl + 'admin/user/delete/' + id,
+                url: baseUrl + 'admin/barang/delete/' + id,
                 type: "GET",
                 success: function(result) {
                     let response = JSON.parse(result);
@@ -106,10 +103,10 @@ $('#list_user').on('click', '#delete', function() {
     });
 });
 
-$("#formAdduser").submit(function(e) {
+$("#formAddbarang").submit(function(e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + "admin/user/insert",
+        url: baseUrl + "admin/barang/insert",
         type: "post",
         data: new FormData(this),
         processData: false,
@@ -132,10 +129,10 @@ $("#formAdduser").submit(function(e) {
     });
 });
 
-$("#formEdituser").submit(function(e) {
+$("#formEditbarang").submit(function(e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + "admin/user/update",
+        url: baseUrl + "admin/barang/update",
         type: "post",
         data: new FormData(this),
         processData: false,

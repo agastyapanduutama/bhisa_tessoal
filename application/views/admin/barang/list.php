@@ -1,39 +1,24 @@
     <div class="card">
         <div class="card-header">
+            <?php if($_SESSION['is_admin'] == 1):?>
             <button class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
-
-
+            <?php endif?>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <div class="form-group">
-                        <label>jabatan </label>
-                        <select name="id_jabatan_filter" class="form-control" id="id_jabatan_filter">
-                            <option value="all">Semua jabatan/Bagian</option>
-                            <?php foreach ($jabatan as $u) {
-                                echo "<option value='" . $u->id . "'>" . $u->nama_jabatan . "</option>";
-                            } ?>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col-3 mt-5">
-                    <button type="button" id="filter" class="btn btn-primary mt-1">Filter Data</button>
-                </div>
-            </div>
             <div class="card-title">
-
+                Data Barang
             </div>
             <div class='table-responsive'>
-                <table id="list_user" class="table table-striped table-bordered">
+                <table id="list_barang" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <td>No</td>
-                            <td>jabatan</td>
-                            <td>Nama user</td>
-                            <td>Username</td>
+                            <td>Kode Barang</td>
+                            <td>Nama Barang</td>
+                            <td>Harga Barang</td>
+                            <td>Satuan</td>
                             <td>Keterangan</td>
+                            <td>Status</td>
                             <td>Aksi</td>
                         </tr>
                     </thead>
@@ -48,41 +33,41 @@
 
 
 
-    <div class="modal fade modalna" tabindex="-1" role="dialog" id="modalTambah">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalTambah">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah user</h5>
+                    <h5 class="modal-title">Tambah barang</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formAdduser">
+                <form id="formAddbarang">
                     <div class="modal-body">
                         <label for="">Label yang memililiki tanda <span style="color:red">*</span> Tidak boleh kosong</label>
                         <br><br><br>
 
                         <div class="form-group">
-                            <label>Nama user <span style="color:red">*</span> </label>
-                            <input type="text" name="nama_user" id="nama_user" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Username <span style="color:red">*</span> </label>
-                            <input type="text" name="username" id="username" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>password <span style="color:red">*</span> </label>
-                            <input type="password" name="password" id="password" class="form-control" required>
+                            <label>Nama barang <span style="color:red">*</span> </label>
+                            <input type="text" name="nama_barang" id="barang" class="form-control" required>
                         </div>
 
                         <div class="form-group">
-                            <label>jabatan <span style="color:red">*</span> </label>
-                            <select name="id_jabatan" class="form-control select2" id="id_jabatan">
-                                <?php foreach ($jabatan as $u) {
-                                    echo "<option value='" . $u->id . "'>" . $u->nama_jabatan . "</option>";
-                                } ?>
+                            <label>Harga Barang</label>
+                            <input type="number" name="harga_barang" id="harga_barang " class="form-control">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Satuan</label>
+                            <select name="id_satuan" id="id_satuan" class="form-control">
+                                <option value="">Pilih Satuan</option>
+                                <?php foreach ($satuan as $s): ?>
+                                    <option value="<?= $s->id ?>"><?= $s->nama_satuan ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
+
 
                         <div class="form-group">
                             <label>Keterangan</label>
@@ -99,16 +84,16 @@
         </div>
     </div>
 
-    <div class="modal fade modalnaedit" tabindex="-1" role="dialog" id="modalEdit">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalEdit">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah user</h5>
+                    <h5 class="modal-title">Tambah barang</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formEdituser">
+                <form id="formEditbarang">
                     <div class="modal-body">
 
                         <label for="">Label yang memililiki tanda <span style="color:red">*</span> Tidak boleh kosong</label>
@@ -117,36 +102,32 @@
                         <input type="hidden" name="id" id="idData">
 
 
-
                         <div class="form-group">
-                            <label>Nama user <span style="color:red">*</span> </label>
-                            <input type="text" name="nama_user" id="nama_user1" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Username <span style="color:red">*</span> </label>
-                            <input type="text" name="username" id="username1" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>password (Abaikan jika tidak diubah) </label>
-                            <input type="password" name="password" id="password" class="form-control">
+                            <label>Nama barang <span style="color:red">*</span> </label>
+                            <input type="text" name="nama_barang" id="nama_barang1" class="form-control" required>
                         </div>
 
                         <div class="form-group">
-                            <label>jabatan <span style="color:red">*</span> </label>
-                            <select name="id_jabatan" class="form-control select2edit" id="id_jabatan1">
-                                <?php foreach ($jabatan as $u) {
-                                    echo "<option value='" . $u->id . "'>" . $u->nama_jabatan . "</option>";
-                                } ?>
+                            <label>Harga Barang<span style="color:red">*</span></label>
+                            <input type="number" name="harga_barang" id="harga_barang1" class="form-control" required>
+                        </div>
 
+                        <div class="form-group">
+                            <label>Satuan</label>
+                            <select name="id_satuan" id="id_satuan1" class="form-control">
+                                <option value="">Pilih Satuan</option>
+                                <?php foreach ($satuan as $s): ?>
+                                    <option value="<?= $s->id ?>"><?= $s->nama_satuan ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
-
-                       
 
                         <div class="form-group">
                             <label>Keterangan</label>
                             <input type="text" name="keterangan" id="keterangan1" class="form-control">
                         </div>
+
+
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

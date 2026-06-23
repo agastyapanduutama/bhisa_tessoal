@@ -67,13 +67,74 @@
 
     <ul class="menu-inner py-1">
 
+        <li class="menu-header small mt-5">
+            <span class="menu-header-text" data-i18n="Umum">Umum</span>
+        </li>
         <li class="menu-item">
 
-            <a href="<?=  base_url('admin/dashboard') ?>" class="menu-link">
-                <i class="menu-icon  ri ri-mind-map"></i>
-                <div data-i18n="Perencanaan">Perencanaan</div>
+            <a href="<?= base_url('admin/home') ?>" class="menu-link">
+                <i class="menu-icon  ri ri-bar-chart-line"></i>
+                <div data-i18n="Dashboard">Dashboard</div>
             </a>
-            
+
+        </li>
+        <li class="menu-item">
+
+            <a href="<?= base_url('admin/transaksi') ?>" class="menu-link">
+                <i class="menu-icon  ri ri-exchange-box-line"></i>
+                <div data-i18n="Transaksi">Transaksi</div>
+            </a>
+
+        </li>
+        <li class="menu-item">
+
+            <a href="<?= base_url('admin/barang') ?>" class="menu-link">
+                <i class="menu-icon  ri ri-inbox-2-line"></i>
+                <div data-i18n="Barang">Barang</div>
+            </a>
+
+        </li>
+
+        <?php if ($_SESSION['is_admin'] == 1): ?>
+            <li class="menu-header small mt-5">
+                <span class="menu-header-text" data-i18n="Master Data">Master Data</span>
+            </li>
+            <li class="menu-item">
+
+                <a href="<?= base_url('admin/user') ?>" class="menu-link">
+                    <i class="menu-icon  ri ri-id-card-line"></i>
+                    <div data-i18n="Pengguna">Pengguna</div>
+                </a>
+
+            </li>
+            <li class="menu-item">
+
+                <a href="<?= base_url('admin/jabatan') ?>" class="menu-link">
+                    <i class="menu-icon  ri ri-bard-line"></i>
+                    <div data-i18n="Jabatan">Jabatan</div>
+                </a>
+
+            </li>
+            <li class="menu-item">
+
+                <a href="<?= base_url('admin/satuan') ?>" class="menu-link">
+                    <i class="menu-icon  ri ri-p2p-line"></i>
+                    <div data-i18n="Satuan">Satuan</div>
+                </a>
+
+            </li>
+        <?php endif ?>
+
+        <li class="menu-header small mt-5">
+            <span class="menu-header-text" data-i18n=""></span>
+        </li>
+        <li class="menu-item">
+
+            <a href="<?= base_url('admin/logout') ?>" class="menu-link">
+                <i class="menu-icon  ri ri-logout-box-r-line"></i>
+                <div data-i18n="Keluar">Keluar</div>
+            </a>
+
         </li>
 
 

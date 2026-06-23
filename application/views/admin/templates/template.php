@@ -132,27 +132,7 @@ if (!$this->session->userdata('id_user')) {
                                                 <div class="flex-grow-1">
                                                     <h6 class="mb-0 small"><?= $_SESSION['nama_user'] ?></h6>
                                                     <small class="text-body-secondary">
-                                                        <?php
-
-                                                        switch ($_SESSION['level']) {
-                                                            case '1':
-                                                                echo "Admin";
-                                                                break;
-
-                                                            case '2':
-                                                                echo "Perencanaan";
-                                                                break;
-
-                                                            case '3':
-                                                                echo "Pengadaan";
-                                                                break;
-
-                                                            default:
-                                                                echo "Admin";
-                                                                break;
-                                                        }
-
-                                                        ?>
+                                                       <?=  $_SESSION['nama_jabatan'] ?>
                                                     </small>
                                                 </div>
                                             </div>
@@ -162,11 +142,6 @@ if (!$this->session->userdata('id_user')) {
                                         <div class="dropdown-divider"></div>
                                     </li>
 
-                                    <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
-                                            <i class="icon-base ri ri-settings-4-line icon-22px me-3"></i><span class="align-middle">Ganti Password</span>
-                                        </a>
-                                    </li>
 
                                     <li>
                                         <div class="d-grid px-4 pt-2 pb-1">

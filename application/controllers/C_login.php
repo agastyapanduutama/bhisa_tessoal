@@ -27,13 +27,18 @@ class C_login extends CI_Controller
             if ($this->login->cekDataById([$this->req->encKey('id') => $id]) == true) {
                 $userData = $this->login->getData();
                 if ($userData->status == 1) {
+
+                $jabatan = $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan])->row();
+
                     $session = array(
                         'bhisa_akses'        => true,
                         'id_user'           => $userData->id,
                         'id_jabatan'         => $userData->id_jabatan,
                         'username'          => $userData->username,
                         'nama_user'         => $userData->nama_user,
-                        'logged_in'         => true
+                        'logged_in'         => true,
+                        'is_admin'       => $jabatan->is_admin,
+                        'nama_jabatan'       => $jabatan->nama_jabatan
                     );
                     $this->session->set_userdata($session);
                     $this->input->set_cookie('bhisa', $this->req->enc_string(json_encode($session)), time() + (86400 * 30));
@@ -77,6 +82,10 @@ class C_login extends CI_Controller
         if ($this->login->cek($where) == true) {
             $userData = $this->login->getData();
             if ($userData->status == 1) {
+
+
+                $jabatan = $this->db->get_where('t_jabatan', ['id' => $userData->id_jabatan])->row();
+
                 $session = array(
                     'bhisa_akses'    => true,
                     'id_user'        => $userData->id,
@@ -84,6 +93,8 @@ class C_login extends CI_Controller
                     'username'       => $userData->username,
                     'nama_user'      => $userData->nama_user,
                     'logged_in'      => true,
+                    'is_admin'       => $jabatan->is_admin,
+                    'nama_jabatan'       => $jabatan->nama_jabatan
 
                 );
                 // var_dump($session);

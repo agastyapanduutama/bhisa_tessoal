@@ -1,17 +1,13 @@
-
 $(document).ready(function() {
-    table = $('#list_user').DataTable({
+    table = $('#list_jabatan').DataTable({
         "processing": true,
         "serverSide": true,
         "order": [],
         "ajax": {
-            "url": baseUrl + 'admin/user/data',
+            "url": baseUrl + 'admin/jabatan/data',
             "type": "POST",
             "error": function(error) {
-                errorCode(error);
-            },
-            "data": function(d) {
-                d.id_jabatan = $('#id_jabatan_filter').val();
+                errorCode(error)
             }
         },
         "columnDefs": [
@@ -19,32 +15,22 @@ $(document).ready(function() {
             { "targets": [1, 2, 3], "orderable": true }
         ],
     });
-
-    // Event Klik Tombol Filter
-    $("#filter").click(function() {
-        _reload();
-    });
 });
 
-function _reload() {
-    if (table) {
-        table.ajax.reload(null, false); // null, false menjaga halaman pagination tetap di tempat semula
-    }
-}
-$('#list_user').on('click', '#edit', function() {
+$('#list_jabatan').on('click', '#edit', function() {
     let id = $(this).data('id');
     $.ajax({
-        url: baseUrl + 'admin/user/get/' + id,
+        url: baseUrl + 'admin/jabatan/get/' + id,
         type: "GET",
         success: function(result) {
             let response = JSON.parse(result);
             $("#idData").val(response.id);
-            $("#nama_user1").val(response.nama_user);
-            $("#username1").val(response.username);
-            
-            $("#id_jabatan1").val(response.id_jabatan).trigger('change');
-            
+            $("#nama_jabatan1").val(response.nama_jabatan);
             $("#keterangan1").val(response.keterangan);
+            
+            // PERBAIKAN: Set nilai dropdown Apakah Admin di modal edit
+            $("#is_admin1").val(response.is_admin).trigger('change');
+            
             $("#modalEdit").modal('show');
         },
         error: function(error) {
@@ -53,22 +39,20 @@ $('#list_user').on('click', '#edit', function() {
     });
 });
 
-$('#list_user').on('click', '.btn-toggle-status, #set', function() {
+$('#list_jabatan').on('click', '#set', function() {
     let id = $(this).data('id');
-    let action = $(this).data('action'); // Pastikan di PHP ada attribute: data-action="on" atau data-action="off"
-    
+    let action = $(this).data('action'); // mengambil nilai 'on' atau 'off'
     let pesan = (action === 'off') ? "Data akan dinon-aktifkan !" : "Data akan diaktifkan !";
-    let endpointUrl = baseUrl + 'admin/user/set/' + id + '/' + action;
 
     confirmSweet(pesan).then(result => {
         if (result) {
             $.ajax({
-                url: endpointUrl,
+                url: baseUrl + 'admin/jabatan/set/' + id + '/' + action,
                 type: "GET",
                 success: function(result) {
                     let response = JSON.parse(result);
                     if (response.status == 'ok') {
-                        _reload();
+                        table.ajax.reload(null, false);
                         msgSweetSuccess(response.msg);
                     } else {
                         msgSweetWarning(response.msg);
@@ -82,17 +66,17 @@ $('#list_user').on('click', '.btn-toggle-status, #set', function() {
     });
 });
 
-$('#list_user').on('click', '#delete', function() {
+$('#list_jabatan').on('click', '#delete', function() {
     let id = $(this).data('id');
     confirmSweet("Data akan terhapus secara permanen !").then(result => {
         if (result) {
             $.ajax({
-                url: baseUrl + 'admin/user/delete/' + id,
+                url: baseUrl + 'admin/jabatan/delete/' + id,
                 type: "GET",
                 success: function(result) {
                     let response = JSON.parse(result);
                     if (response.status == 'ok') {
-                        _reload();
+                        table.ajax.reload(null, false);
                         msgSweetSuccess(response.msg);
                     } else {
                         msgSweetWarning(response.msg);
@@ -106,10 +90,10 @@ $('#list_user').on('click', '#delete', function() {
     });
 });
 
-$("#formAdduser").submit(function(e) {
+$("#formAddjabatan").submit(function(e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + "admin/user/insert",
+        url: baseUrl + "admin/jabatan/insert",
         type: "post",
         data: new FormData(this),
         processData: false,
@@ -120,10 +104,10 @@ $("#formAdduser").submit(function(e) {
             if (response.status == "fail") {
                 msgSweetError(response.msg);
             } else {
-                _reload();
+                table.ajax.reload(null, false);
                 msgSweetSuccess(response.msg);
-                clearInput($("input"));
-                $("#modalTambah").modal('hide'); // Menutup modal tambah jika ada
+                $("#modalTambah").modal('hide');
+                $('#formAddjabatan')[0].reset();
             }
         },
         error: function(event) {
@@ -132,10 +116,10 @@ $("#formAdduser").submit(function(e) {
     });
 });
 
-$("#formEdituser").submit(function(e) {
+$("#formEditjabatan").submit(function(e) {
     e.preventDefault();
     $.ajax({
-        url: baseUrl + "admin/user/update",
+        url: baseUrl + "admin/jabatan/update",
         type: "post",
         data: new FormData(this),
         processData: false,
@@ -144,12 +128,10 @@ $("#formEdituser").submit(function(e) {
         success: function(result) {
             let response = JSON.parse(result);
             if (response.status == "fail") {
-                clearInput($("input"));
-                $("#modalEdit").modal('hide');
+                msgSweetError(response.msg);
             } else {
-                _reload();
+                table.ajax.reload(null, false);
                 msgSweetSuccess(response.msg);
-                clearInput($("input"));
                 $("#modalEdit").modal('hide');
             }
         },
@@ -158,11 +140,3 @@ $("#formEdituser").submit(function(e) {
         }
     });
 });
-
-function image(image) {
-    let file = baseUrl + 'assets/uploads/images/' + image;
-    var imageElement = document.getElementById('image_id');
-    if(imageElement) {
-        imageElement.src = file;
-    }
-}
